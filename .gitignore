@@ -1,0 +1,22 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Build artefacts
+*.zip
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# JS/PHP deps (se mai li userai)
+node_modules/
+vendor/
+
+# Test/CI cache
+coverage/
+.cache/
+
+# WordPress dev extras
+wp-content/cache/

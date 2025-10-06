@@ -18,12 +18,13 @@ jobs:
       - name: Read version from plugin header
         id: version
         run: |
-          VERSION=$(grep -Po '(?<=^ \* Version:\s*)[0-9]+\.[0-9]+\.[0-9]+' billiard-scoreboard/billiard-scoreboard.php)
+          VERSION=$(grep "Version:" billiard-scoreboard/billiard-scoreboard.php | head -1 | awk '{print $3}')
           if [ -z "$VERSION" ]; then
             echo "Version not found in plugin header"
             exit 1
           fi
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
 
       # 3️⃣ Crea lo ZIP
       - name: Zip plugin folder

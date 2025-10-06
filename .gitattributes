@@ -1,0 +1,4 @@
+# Escludi cartelle di CI, test, docs dai pacchetti "export"
+.github export-ignore
+tests/ export-ignore
+docs/ export-ignore

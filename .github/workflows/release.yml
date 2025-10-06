@@ -1,0 +1,42 @@
+name: Build & Release ZIP on tag
+
+# 🔹 La Action si attiva solo quando pubblichi un tag tipo v1.10.12
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+      # 1️⃣ Clona il repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Legge la versione dal file principale del plugin
+      - name: Read version from plugin header
+        id: version
+        run: |
+          VERSION=$(grep -Po '(?<=^ \* Version:\s*)[0-9]+\.[0-9]+\.[0-9]+' billiard-scoreboard/billiard-scoreboard.php)
+          if [ -z "$VERSION" ]; then
+            echo "Version not found in plugin header"
+            exit 1
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      # 3️⃣ Crea lo ZIP
+      - name: Zip plugin folder
+        run: |
+          zip -r "billiard-scoreboard-${{ steps.version.outputs.version }}.zip" billiard-scoreboard \
+            -x "billiard-scoreboard/.git/*" \
+               "billiard-scoreboard/node_modules/*" \
+               "billiard-scoreboard/vendor/*"
+
+      # 4️⃣ Crea la Release su GitHub e allega lo zip
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "billiard-scoreboard-${{ steps.version.outputs.version }}.zip"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

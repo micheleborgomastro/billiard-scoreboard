@@ -205,7 +205,7 @@
           s1.classList.remove('bsb-flash'); s2.classList.remove('bsb-flash');
           s1.textContent='0'; s2.textContent='0';
           p1.textContent='ultimo tiro 0'; p2.textContent='ultimo tiro 0';
-          await push({score1:0, score2:0});
+          await push({score1:0, score2:0, log1:[], log2:[]});
           flushQueue();
         }); return;
       }
@@ -220,7 +220,16 @@
           if(winner==='p1'){ const v=(parseInt(st1.textContent||'0',10)||0)+1; st1.textContent=v; patch.sets1=v; }
           else if(winner==='p2'){ const v=(parseInt(st2.textContent||'0',10)||0)+1; st2.textContent=v; patch.sets2=v; }
           cur1=0; cur2=0; s1.textContent=0; s2.textContent=0; buf1=''; buf2='';
-          patch.score1=0; patch.score2=0; await push(patch);
+          patch.score1=0; patch.score2=0; // azzera CRONOLOGIA (memo) di entrambi
+patch.log1 = [];
+patch.log2 = [];
+
+// UI: resetta le preview "ultimo tiro"
+buf1 = ''; buf2 = ''; cur1 = 0; cur2 = 0;
+p1.textContent = 'ultimo tiro 0';
+p2.textContent = 'ultimo tiro 0';
+
+ await push(patch);
           flushQueue();
         }); return;
       }

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Billiard Scoreboard (Live)
  * Description: Segnapunti biliardo con tastierini, "ultimo tiro", Memo, set ±, Nuova partita, Fine set (conferma), Azzera punteggi (conferma), offline local-first + sync, overlay OBS con loghi affiancati e centro fisso, fullscreen.
- * Version: 1.10.11
+ * Version: 1.10.12
  * Author: Your Name
  * Requires at least: 5.8
  * Tested up to: 6.6
